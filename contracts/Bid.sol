@@ -7,7 +7,7 @@ contract Bid {
         userBids[msg.sender] = 0;
     }
 
-    function setBid(address to, uint amount) {
-        balances[msg.sender] = amount;
+    function setBid(address to, uint bidAmount) {
+        userBids[msg.sender] = bidAmount;
     }
 }
