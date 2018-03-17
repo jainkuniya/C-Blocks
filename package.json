@@ -1,0 +1,15 @@
+{
+  "name": "C-Block",
+  "version": "0.0.1",
+  "description": "A Smart Contract based system",
+  "author": "Aditya Jain",
+  "license": "MIT",
+  "dependencies": {
+    "abi-decoder": "^1.0.9",
+    "ethereumjs-testrpc": "^6.0.3",
+    "solc": "^0.4.19",
+    "truffle-contract": "^3.0.1",
+    "truffle": "^4.0.4",
+    "web3": "^1.0.0-beta.27"
+  }
+}
