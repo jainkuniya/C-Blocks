@@ -2,11 +2,9 @@ var express = require('express');
 var app = express();
 
 var contractorRouter = require('./routes/contractor');
-
 app.get('/', function (req, res) {
   res.send('Welcome to C-Blocks');
 });
-
 app.use("/contractor",contractorRouter);
 
 app.listen(3000, function () {
