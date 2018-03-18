@@ -1,0 +1,47 @@
+body {
+  background-color: #f0f0f0;
+  padding: 2em;
+  font-family: 'Raleway', 'Source Sans Pro', 'Arial';
+}
+.container {
+  width: 80%;
+  margin: 0 auto;
+}
+label {
+  display: block;
+  margin-bottom: 10px;
+}
+input {
+  padding: 10px;
+  width: 50%;
+  margin-bottom: 1em;
+}
+button {
+  margin: 2em 0;
+  padding: 1em 4em;
+  display: block;
+}
+
+#instructor {
+  padding: 1em;
+  background-color: #fff;
+  margin: 1em 0;
+}
+
+#loader {
+  width: 100px;
+  display: none;
+}
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  width: 100%;
+  padding: 8px 16px;
+  margin: 16px;
+  background-color: #ffffff;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
