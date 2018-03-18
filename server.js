@@ -12,7 +12,7 @@ app.get('/', function (req, res) {
 
 app.use(express.static(path.join(__dirname,'assets')));
 
-app.get('/test', function (req, res) {
+app.get('/makeBid', function (req, res) {
     res.sendFile(__dirname + '/assets/makeBid.html');
 });
 

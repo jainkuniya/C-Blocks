@@ -1,6 +1,7 @@
 var express = require('express');
 var fs = require('fs');
 var Web3 = require('web3');
+var index = 0;
 
 const router = express.Router();
 const counterHeadAddress = '0x6e15842be020cdffedb547976821654db2697349';
@@ -171,12 +172,18 @@ const abi = [
 ];
 
 router.get('/config', function (req, res) {
-    fs.readFile('./assets/projects.json', 'utf8', function (err, data) {
+    index++;
+    index = index % 5;
+    fs.readFile('./assets/projects.json', 'utf8', function (err, projectData) {
         if (!err) {
-            var projectsArr = JSON.parse(data);
-            res.send({
-                "error": false, "project": projectsArr["projects"][0], "user": {
-                    "user_id": 1, "user_name": "Aditya"
+            fs.readFile('./assets/users.json', 'utf8', function (err, userData) {
+                if (!err) {
+                    var usersArr = JSON.parse(userData);
+                    var projectsArr = JSON.parse(projectData);
+                    console.log(usersArr["users"][index]);
+                    res.send({
+                        "error": false, "project": projectsArr["projects"][0], "user":usersArr["users"][index]
+                    });
                 }
             });
         }
@@ -197,13 +204,53 @@ router.post('/submitBid', function (req, res) {
     var projectId = parseInt(req.body.project_id);
     var userId = parseInt(req.body.user_id);
     var bid = parseInt(req.body.bid);
-    console.log(bid);
     var web3 = new Web3();
     web3.setProvider(new web3.providers.HttpProvider('http://localhost:8545'));
     web3.eth.defaultAccount = web3.eth.accounts[0];
     var smartContract = web3.eth.contract(abi).at(counterHeadAddress);
-    smartContract.addBid(Date.now(),projectId,bid,userId,counterHeadAddress);
-    res.send({"error": false});
+    var txHash = smartContract.addBid(Date.now(),projectId,bid,userId,counterHeadAddress);
+    res.send('\n' +
+        '<!DOCTYPE html>\n' +
+        '<html lang="en">\n' +
+        '<head>\n' +
+        '    <meta charset="UTF-8">\n' +
+        '    <meta name="viewport" content="width=device-width, initial-scale=1.0">\n' +
+        '    <meta http-equiv="X-UA-Compatible" content="ie=edge">\n' +
+        '    <title>C-Blocks</title>\n' +
+        '\n' +
+        '    <link rel="stylesheet" type="text/css" href="../css/main.css">\n' +
+        '\n' +
+        '    <script src="jquery/sc1.js"></script>\n' +
+        '    <script src="jquery/sc2.js"></script>\n' +
+        '</head>\n' +
+        '<body>\n' +
+        '<div class="container">\n' +
+        '\n' +
+        '    <b id="head" style="font-size: 32px; color: #000;">Bid placed successfully 👍</b>\n' +
+        '    <br><br>\n' +
+        '    <p style="font-size: 22px; color: #cacaca;">Hash Id</p>\n' +
+        '    <b id="hash" style="font-size: 32px; color: #000;">'+txHash+'</b>\n' +
+        '    <br><br>\n' +
+        '    <p style="font-size: 22px; color: #cacaca;">Time</p>\n' +
+        '    <b id="time" style="font-size: 32px; color: #000;">'+new Date().toUTCString()+'</b>\n' +
+        '    <br><br>\n' +
+        '    <p style="font-size: 22px; color: #cacaca;">Bid Amount</p>\n' +
+        '    <b id="amount" style="font-size: 32px; color: #000;">₹ '+bid+'</b><br><br><br><br><br><br>\n' +
+        '    <p style="font-size: 22px; color: #cacaca; width: 100%; text-align: center">We\'ll notify you once the bidding is complete</p>\n' +
+        '</div>\n' +
+        '\n' +
+        '</body>\n' +
+        '</html>\n');
+
+    fs.readFile('./assets/projects.json', 'utf8', function (err, data) {
+        if (!err) {
+            var projectsArr = JSON.parse(data)["projects"];
+            var project = projectsArr.find(function (p) {
+                return p.project_id === projectId;
+            });
+
+        }
+    });
 });
 
 module.exports = router;
