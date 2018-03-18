@@ -1,0 +1,54 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>C-Blocks</title>
+
+    <link rel="stylesheet" type="text/css" href="../css/main.css">
+
+    <script src="../jquery/sc1.js"></script>
+    <script src="../jquery/sc2.js"></script>
+</head>
+<body>
+<div class="container">
+
+    <h1 id="head">Bid for tender</h1>
+    <hr>
+    <br>
+    <img id="loader" src="https://loading.io/spinners/double-ring/lg.double-ring-spinner.gif">
+    <p id="des"></p>
+
+    <form action="./contractor/submitBid" method="post">
+        <input hidden name="project_id" id="project_id"/>
+        <input hidden name="user_id" id="user_id"/>
+
+        <label for="cost" class="col-lg-2 control-label">Cost</label>
+        <input name="bid" type="number">
+
+        <input type="submit" value="submit" id="button"/>
+    </form>
+
+
+</div>
+
+</body>
+
+<script>
+    $(document).ready(function(){
+        $.ajax({
+            url: "./contractor/config",
+            cache: false,
+            success: function(html){
+                console.log(html);
+                document.getElementById('des').innerHTML = html.project.project_description;
+                document.getElementById('head').innerHTML = "Bid for " + html.project.project_title;
+                document.getElementById("project_id").value = html.project.project_id;
+                document.getElementById("user_id").value = html.user.user_id;
+            }
+        });
+    });
+</script>
+</html>
