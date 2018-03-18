@@ -16,6 +16,10 @@ app.get('/makeBid', function (req, res) {
     res.sendFile(__dirname + '/assets/makeBid.html');
 });
 
+app.get('/startBid', function (req, res) {
+    res.sendFile(__dirname + '/assets/startBid.html');
+});
+
 app.use(bodyParser.urlencoded({
     extended: true
 }));

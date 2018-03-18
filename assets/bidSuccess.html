@@ -28,4 +28,23 @@
 </div>
 
 </body>
+
+<script>
+    $(document).ready(function(){
+        $.ajax({
+            url: "./contractor/config",
+            cache: false,
+            success: function(html){
+                console.log(html);
+                document.getElementById('des').innerHTML = html.project.project_description;
+                document.getElementById('deadline').innerHTML = html.project.deadline;
+                document.getElementById('head').innerHTML = html.project.project_title;
+                document.getElementById("project_id").value = html.project.project_id;
+                document.getElementById("user_id").value = html.user.user_id;
+                document.getElementById('user_name').innerHTML = 'Welcome '+html.user.user_name+'! 😎';
+
+            }
+        });
+    });
+</script>
 </html>

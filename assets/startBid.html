@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>C-Blocks</title>
+
+    <link rel="stylesheet" type="text/css" href="../css/main.css">
+
+    <script src="../jquery/sc1.js"></script>
+    <script src="../jquery/sc2.js"></script>
+</head>
+<body>
+<div class="container">
+    <br><br>
+    <b id="user_name" style="font-size: 32px; color: #000;"></b>
+    <br><br>
+    <p style="font-size: 18px; color: #cacaca;">Start a bid for 🗃</p>
+    <b id="head" style="font-size: 28px; color: #000;"></b>
+    <br><br>
+    <p style="font-size: 18px; color: #cacaca;">Project Description 📄</p>
+    <b id="des" style="font-size: 28px; color: #000;"></b>
+    <br><br>
+    <p style="font-size: 18px; color: #cacaca;">Project completion deadline ⏳</p>
+    <b id="deadline" style="font-size: 28px; color: #000;"></b>
+
+
+    <form action="./government/startBid" method="post">
+        <input hidden name="project_id" id="project_id"/>
+        <input hidden name="user_id" id="user_id"/>
+        <br>
+        <p style="font-size: 18px; color: #cacaca;">Enter max bid amount 💸</p>
+        <input name="maxBid" type="number"
+        style="border-radius: 0px;
+        border-color: transparent;
+        border-bottom-width: 1px;
+        border-bottom-color: #cacaca;
+        margin-top: -20px;
+        font-size: 28px;
+        color: #000;
+        font-weight: bold;
+        outline-width: 0;
+        "
+        >
+        <br><br><br><br>
+        <input type="submit" value="Start Bid" id="button"
+               style="background-color: #5953C4;
+               color:white;
+               font-size: 24px;
+               border-radius: 4px"/>
+    </form>
+</div>
+
+</body>
+
+<script>
+    $(document).ready(function(){
+        $.ajax({
+            url: "./contractor/config",
+            cache: false,
+            success: function(html){
+                console.log(html);
+                document.getElementById('des').innerHTML = html.project.project_description;
+                document.getElementById('deadline').innerHTML = html.project.deadline;
+                document.getElementById('head').innerHTML = html.project.project_title;
+                document.getElementById("project_id").value = html.project.project_id;
+                document.getElementById("user_id").value = html.user.user_id;
+                document.getElementById('user_name').innerHTML = 'Welcome Aditya! 😎';
+
+            }
+        });
+    });
+</script>
+</html>
