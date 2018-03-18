@@ -4,46 +4,37 @@ var Web3 = require('web3');
 var index = 0;
 
 const router = express.Router();
-const counterHeadAddress = '0x6e15842be020cdffedb547976821654db2697349';
+const counterHeadAddress = '0xbde9d20990af6c30d4627d673dd28e4a44d0e371';
 const abi = [
     {
         "constant": true,
-        "inputs": [],
-        "name": "getWinner",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint8"
-            },
-            {
-                "name": "",
-                "type": "uint8"
-            },
-            {
-                "name": "",
-                "type": "uint8"
-            },
-            {
-                "name": "",
-                "type": "uint8"
-            },
-            {
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "constant": true,
-        "inputs": [],
-        "name": "getBidsCount",
-        "outputs": [
+        "inputs": [
             {
                 "name": "",
                 "type": "uint256"
+            }
+        ],
+        "name": "bids",
+        "outputs": [
+            {
+                "name": "timestamp",
+                "type": "uint8"
+            },
+            {
+                "name": "projectId",
+                "type": "uint8"
+            },
+            {
+                "name": "amount",
+                "type": "uint8"
+            },
+            {
+                "name": "userId",
+                "type": "uint8"
+            },
+            {
+                "name": "bidAddress",
+                "type": "address"
             }
         ],
         "payable": false,
@@ -86,41 +77,6 @@ const abi = [
         "type": "function"
     },
     {
-        "constant": true,
-        "inputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "name": "bids",
-        "outputs": [
-            {
-                "name": "timestamp",
-                "type": "uint8"
-            },
-            {
-                "name": "projectId",
-                "type": "uint8"
-            },
-            {
-                "name": "amount",
-                "type": "uint8"
-            },
-            {
-                "name": "userId",
-                "type": "uint8"
-            },
-            {
-                "name": "bidAddress",
-                "type": "address"
-            }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
         "constant": false,
         "inputs": [
             {
@@ -151,6 +107,50 @@ const abi = [
         "type": "function"
     },
     {
+        "constant": true,
+        "inputs": [],
+        "name": "getBidsCount",
+        "outputs": [
+            {
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "getWinner",
+        "outputs": [
+            {
+                "name": "",
+                "type": "uint8"
+            },
+            {
+                "name": "",
+                "type": "uint8"
+            },
+            {
+                "name": "",
+                "type": "uint8"
+            },
+            {
+                "name": "",
+                "type": "uint8"
+            },
+            {
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
         "constant": false,
         "inputs": [
             {
@@ -159,6 +159,15 @@ const abi = [
             }
         ],
         "name": "setThreshold",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "getThreshold",
         "outputs": [
             {
                 "name": "",
@@ -166,7 +175,7 @@ const abi = [
             }
         ],
         "payable": false,
-        "stateMutability": "nonpayable",
+        "stateMutability": "view",
         "type": "function"
     }
 ];
@@ -239,7 +248,8 @@ router.post('/submitBid', function (req, res) {
         '    <p style="font-size: 22px; color: #cacaca; width: 100%; text-align: center">We\'ll notify you once the bidding is complete</p>\n' +
         '</div>\n' +
         '\n' +
-        '</body>\n' +
+        '</body>' +
+        '\n' +
         '</html>\n');
 
     fs.readFile('./assets/projects.json', 'utf8', function (err, data) {
